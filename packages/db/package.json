@@ -2,9 +2,8 @@
   "name": "db",
   "module": "index.ts",
   "type": "module",
-  "private": true,
-  "exports" : {
-    "." : "./index.ts"
+  "exports": {
+    ".": "./index.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
@@ -14,6 +13,6 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "@prisma/client": "^6.6.0"
+    "@prisma/client": "^6.7.0"
   }
 }

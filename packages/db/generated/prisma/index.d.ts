@@ -3590,6 +3590,8 @@ export namespace Prisma {
     userID: string | null
     prompt: string | null
     status: $Enums.outputImageStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type OutputImagesMaxAggregateOutputType = {
@@ -3599,6 +3601,8 @@ export namespace Prisma {
     userID: string | null
     prompt: string | null
     status: $Enums.outputImageStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type OutputImagesCountAggregateOutputType = {
@@ -3608,6 +3612,8 @@ export namespace Prisma {
     userID: number
     prompt: number
     status: number
+    createdAt: number
+    updatedAt: number
     _all: number
   }
 
@@ -3619,6 +3625,8 @@ export namespace Prisma {
     userID?: true
     prompt?: true
     status?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type OutputImagesMaxAggregateInputType = {
@@ -3628,6 +3636,8 @@ export namespace Prisma {
     userID?: true
     prompt?: true
     status?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type OutputImagesCountAggregateInputType = {
@@ -3637,6 +3647,8 @@ export namespace Prisma {
     userID?: true
     prompt?: true
     status?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -3719,6 +3731,8 @@ export namespace Prisma {
     userID: string
     prompt: string
     status: $Enums.outputImageStatus
+    createdAt: Date
+    updatedAt: Date
     _count: OutputImagesCountAggregateOutputType | null
     _min: OutputImagesMinAggregateOutputType | null
     _max: OutputImagesMaxAggregateOutputType | null
@@ -3745,6 +3759,8 @@ export namespace Prisma {
     userID?: boolean
     prompt?: boolean
     status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     model?: boolean | ModelDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["outputImages"]>
 
@@ -3755,6 +3771,8 @@ export namespace Prisma {
     userID?: boolean
     prompt?: boolean
     status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     model?: boolean | ModelDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["outputImages"]>
 
@@ -3765,6 +3783,8 @@ export namespace Prisma {
     userID?: boolean
     prompt?: boolean
     status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     model?: boolean | ModelDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["outputImages"]>
 
@@ -3775,9 +3795,11 @@ export namespace Prisma {
     userID?: boolean
     prompt?: boolean
     status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type OutputImagesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "imageUrl" | "modelId" | "userID" | "prompt" | "status", ExtArgs["result"]["outputImages"]>
+  export type OutputImagesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "imageUrl" | "modelId" | "userID" | "prompt" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["outputImages"]>
   export type OutputImagesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     model?: boolean | ModelDefaultArgs<ExtArgs>
   }
@@ -3800,6 +3822,8 @@ export namespace Prisma {
       userID: string
       prompt: string
       status: $Enums.outputImageStatus
+      createdAt: Date
+      updatedAt: Date
     }, ExtArgs["result"]["outputImages"]>
     composites: {}
   }
@@ -4230,6 +4254,8 @@ export namespace Prisma {
     readonly userID: FieldRef<"OutputImages", 'String'>
     readonly prompt: FieldRef<"OutputImages", 'String'>
     readonly status: FieldRef<"OutputImages", 'outputImageStatus'>
+    readonly createdAt: FieldRef<"OutputImages", 'DateTime'>
+    readonly updatedAt: FieldRef<"OutputImages", 'DateTime'>
   }
     
 
@@ -6795,7 +6821,9 @@ export namespace Prisma {
     modelId: 'modelId',
     userID: 'userID',
     prompt: 'prompt',
-    status: 'status'
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type OutputImagesScalarFieldEnum = (typeof OutputImagesScalarFieldEnum)[keyof typeof OutputImagesScalarFieldEnum]
@@ -7126,6 +7154,8 @@ export namespace Prisma {
     userID?: StringFilter<"OutputImages"> | string
     prompt?: StringFilter<"OutputImages"> | string
     status?: EnumoutputImageStatusFilter<"OutputImages"> | $Enums.outputImageStatus
+    createdAt?: DateTimeFilter<"OutputImages"> | Date | string
+    updatedAt?: DateTimeFilter<"OutputImages"> | Date | string
     model?: XOR<ModelScalarRelationFilter, ModelWhereInput>
   }
 
@@ -7136,6 +7166,8 @@ export namespace Prisma {
     userID?: SortOrder
     prompt?: SortOrder
     status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     model?: ModelOrderByWithRelationInput
   }
 
@@ -7149,6 +7181,8 @@ export namespace Prisma {
     userID?: StringFilter<"OutputImages"> | string
     prompt?: StringFilter<"OutputImages"> | string
     status?: EnumoutputImageStatusFilter<"OutputImages"> | $Enums.outputImageStatus
+    createdAt?: DateTimeFilter<"OutputImages"> | Date | string
+    updatedAt?: DateTimeFilter<"OutputImages"> | Date | string
     model?: XOR<ModelScalarRelationFilter, ModelWhereInput>
   }, "id">
 
@@ -7159,6 +7193,8 @@ export namespace Prisma {
     userID?: SortOrder
     prompt?: SortOrder
     status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     _count?: OutputImagesCountOrderByAggregateInput
     _max?: OutputImagesMaxOrderByAggregateInput
     _min?: OutputImagesMinOrderByAggregateInput
@@ -7174,6 +7210,8 @@ export namespace Prisma {
     userID?: StringWithAggregatesFilter<"OutputImages"> | string
     prompt?: StringWithAggregatesFilter<"OutputImages"> | string
     status?: EnumoutputImageStatusWithAggregatesFilter<"OutputImages"> | $Enums.outputImageStatus
+    createdAt?: DateTimeWithAggregatesFilter<"OutputImages"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"OutputImages"> | Date | string
   }
 
   export type PacksWhereInput = {
@@ -7443,20 +7481,24 @@ export namespace Prisma {
 
   export type OutputImagesCreateInput = {
     id?: string
-    imageUrl: string
+    imageUrl?: string
     userID: string
     prompt: string
     status?: $Enums.outputImageStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
     model: ModelCreateNestedOneWithoutOutputImagesInput
   }
 
   export type OutputImagesUncheckedCreateInput = {
     id?: string
-    imageUrl: string
+    imageUrl?: string
     modelId: string
     userID: string
     prompt: string
     status?: $Enums.outputImageStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type OutputImagesUpdateInput = {
@@ -7465,6 +7507,8 @@ export namespace Prisma {
     userID?: StringFieldUpdateOperationsInput | string
     prompt?: StringFieldUpdateOperationsInput | string
     status?: EnumoutputImageStatusFieldUpdateOperationsInput | $Enums.outputImageStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     model?: ModelUpdateOneRequiredWithoutOutputImagesNestedInput
   }
 
@@ -7475,15 +7519,19 @@ export namespace Prisma {
     userID?: StringFieldUpdateOperationsInput | string
     prompt?: StringFieldUpdateOperationsInput | string
     status?: EnumoutputImageStatusFieldUpdateOperationsInput | $Enums.outputImageStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type OutputImagesCreateManyInput = {
     id?: string
-    imageUrl: string
+    imageUrl?: string
     modelId: string
     userID: string
     prompt: string
     status?: $Enums.outputImageStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type OutputImagesUpdateManyMutationInput = {
@@ -7492,6 +7540,8 @@ export namespace Prisma {
     userID?: StringFieldUpdateOperationsInput | string
     prompt?: StringFieldUpdateOperationsInput | string
     status?: EnumoutputImageStatusFieldUpdateOperationsInput | $Enums.outputImageStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type OutputImagesUncheckedUpdateManyInput = {
@@ -7501,6 +7551,8 @@ export namespace Prisma {
     userID?: StringFieldUpdateOperationsInput | string
     prompt?: StringFieldUpdateOperationsInput | string
     status?: EnumoutputImageStatusFieldUpdateOperationsInput | $Enums.outputImageStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PacksCreateInput = {
@@ -7897,6 +7949,8 @@ export namespace Prisma {
     userID?: SortOrder
     prompt?: SortOrder
     status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type OutputImagesMaxOrderByAggregateInput = {
@@ -7906,6 +7960,8 @@ export namespace Prisma {
     userID?: SortOrder
     prompt?: SortOrder
     status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type OutputImagesMinOrderByAggregateInput = {
@@ -7915,6 +7971,8 @@ export namespace Prisma {
     userID?: SortOrder
     prompt?: SortOrder
     status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type EnumoutputImageStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -8355,18 +8413,22 @@ export namespace Prisma {
 
   export type OutputImagesCreateWithoutModelInput = {
     id?: string
-    imageUrl: string
+    imageUrl?: string
     userID: string
     prompt: string
     status?: $Enums.outputImageStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type OutputImagesUncheckedCreateWithoutModelInput = {
     id?: string
-    imageUrl: string
+    imageUrl?: string
     userID: string
     prompt: string
     status?: $Enums.outputImageStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type OutputImagesCreateOrConnectWithoutModelInput = {
@@ -8405,6 +8467,8 @@ export namespace Prisma {
     userID?: StringFilter<"OutputImages"> | string
     prompt?: StringFilter<"OutputImages"> | string
     status?: EnumoutputImageStatusFilter<"OutputImages"> | $Enums.outputImageStatus
+    createdAt?: DateTimeFilter<"OutputImages"> | Date | string
+    updatedAt?: DateTimeFilter<"OutputImages"> | Date | string
   }
 
   export type ModelCreateWithoutOutputImagesInput = {
@@ -8570,10 +8634,12 @@ export namespace Prisma {
 
   export type OutputImagesCreateManyModelInput = {
     id?: string
-    imageUrl: string
+    imageUrl?: string
     userID: string
     prompt: string
     status?: $Enums.outputImageStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type OutputImagesUpdateWithoutModelInput = {
@@ -8582,6 +8648,8 @@ export namespace Prisma {
     userID?: StringFieldUpdateOperationsInput | string
     prompt?: StringFieldUpdateOperationsInput | string
     status?: EnumoutputImageStatusFieldUpdateOperationsInput | $Enums.outputImageStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type OutputImagesUncheckedUpdateWithoutModelInput = {
@@ -8590,6 +8658,8 @@ export namespace Prisma {
     userID?: StringFieldUpdateOperationsInput | string
     prompt?: StringFieldUpdateOperationsInput | string
     status?: EnumoutputImageStatusFieldUpdateOperationsInput | $Enums.outputImageStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type OutputImagesUncheckedUpdateManyWithoutModelInput = {
@@ -8598,6 +8668,8 @@ export namespace Prisma {
     userID?: StringFieldUpdateOperationsInput | string
     prompt?: StringFieldUpdateOperationsInput | string
     status?: EnumoutputImageStatusFieldUpdateOperationsInput | $Enums.outputImageStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PackPromptsCreateManyPackInput = {

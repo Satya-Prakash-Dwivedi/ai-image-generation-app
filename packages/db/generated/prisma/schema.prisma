@@ -39,13 +39,15 @@ model Model {
 }
 
 model OutputImages {
-  id       String            @id @default(uuid())
-  imageUrl String
-  modelId  String
-  userID   String
-  prompt   String
-  status   outputImageStatus @default(Pending)
-  model    Model             @relation(fields: [modelId], references: [id])
+  id        String            @id @default(uuid())
+  imageUrl  String            @default("")
+  modelId   String
+  userID    String
+  prompt    String
+  status    outputImageStatus @default(Pending)
+  model     Model             @relation(fields: [modelId], references: [id])
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
 }
 
 model Packs {
@@ -90,11 +92,11 @@ enum ModelTypeEnum {
 enum EthenicityEnum {
   White
   Black
-  Asian_American
-  East_Asian
-  South_East_Asian
-  South_Asian
-  Middle_Eastern
+  Asian_American   @map("Asian American")
+  East_Asian       @map("East Asian")
+  South_East_Asian @map("South East Asian")
+  South_Asian      @map("South Asian")
+  Middle_Eastern   @map("Middle Eastern")
   Pacific
   Hispanic
 }

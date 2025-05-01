@@ -146,7 +146,9 @@ exports.Prisma.OutputImagesScalarFieldEnum = {
   modelId: 'modelId',
   userID: 'userID',
   prompt: 'prompt',
-  status: 'status'
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.PacksScalarFieldEnum = {
