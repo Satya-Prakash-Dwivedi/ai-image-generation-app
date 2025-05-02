@@ -52,7 +52,7 @@ app.post("/ai/generate", async (req, res) => {
     const data = await prismaClient.outputImages.create({
       data : {
         prompt: parsedBody.data.prompt,
-        userId : USERID,
+        userID : USERID,
         modelId : parsedBody.data.modelId,
         imageUrl: ""
       }
@@ -79,10 +79,10 @@ app.post("/pack/generate", async(req, res) => {
     })
 
     const images = await prismaClient.outputImages.createManyAndReturn({
-      data: prompts.map((prompt) => ({
+        data: prompts.map((prompt) => ({
         prompt : prompt.prompt,
         userID : USERID,
-        modelID : parsedBody.data.modelId,
+        modelId : parsedBody.data.modelId,
         imageUrl : ""
       }))
     })
@@ -108,7 +108,7 @@ app.get("/image/bulk", async (req, res) => {
     const imagesData = await prismaClient.outputImages.findMany({
       where: {
         id: {in : ids},
-        userId : USERID
+        userID : USERID
       },
       skip : parseInt(offset),
       take : parseInt(limit)
