@@ -154,7 +154,7 @@ app.post("/pack/generate", async(req, res) => {
         userID : USERID,
         modelId : parsedBody.data.modelId,
         imageUrl : "",
-        falAiRequestId : requestIds[index].request_id,
+        falAiRequestId : requestIds[index]?.request_id,
       }))
     })
 
