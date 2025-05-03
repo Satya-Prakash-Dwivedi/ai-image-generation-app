@@ -7,6 +7,9 @@ import {
 import { prismaClient } from "db";
 import { S3Client } from "bun";
 import { FalAIModel } from "./models/FalAIModel";
+import dotenv from "dotenv"
+
+dotenv.config()
 
 const PORT = process.env.PORT || 8080;
 
@@ -16,6 +19,27 @@ const app = express();
 app.use(express.json())
 
 const USERID = "123"
+
+console.log(process.env.S3_ACCESS_KEY)
+console.log(process.env.S3_SECRET_KEY)
+console.log(process.env.ENDPOINT)
+console.log(process.env.BUCKET_NAME)
+
+app.get("/pre-signed-url", async(req, res) => {
+  const key = `models/${Date.now()}_${Math.random()}.zip`;
+  const url = S3Client.presign( key,{
+    accessKeyId: process.env.S3_ACCESS_KEY,
+    secretAccessKey : process.env.S3_SECRET_KEY,
+    endpoint : process.env.ENDPOINT,
+    bucket : process.env.BUCKET_NAME,
+    expiresIn : 60 * 5,
+  })
+
+  res.json({
+    url,
+    key
+  })
+})
 
 app.post("/ai/training", async (req, res) => {
   const parsedBody = TrainModel.safeParse(req.body)
@@ -28,7 +52,7 @@ app.post("/ai/training", async (req, res) => {
     return
   }
 
-  const { request_id, response_url } = await falAiModel.trainModel("", parsedBody.data.name)
+  const { request_id, response_url } = await falAiModel.trainModel(parsedBody.data.zipUrl, parsedBody.data.name)
 
   const data = await prismaClient.model.create({
     data: {
@@ -39,6 +63,7 @@ app.post("/ai/training", async (req, res) => {
       eyeColor : parsedBody.data.eyeColor,
       bald : parsedBody.data.bald,
       userId : USERID,
+      zipUrl : parsedBody.data.zipUrl,
       falAiRequestId : request_id,
     }
   })
@@ -103,12 +128,33 @@ app.post("/pack/generate", async(req, res) => {
       }
     })
 
+    const model = await prismaClient.model.findFirst({
+      where: {
+        id: parsedBody.data.modelId,
+      },
+    });
+  
+    if (!model) {
+      res.status(411).json({
+        message: "Model not found",
+      });
+      return;
+    }
+
+    let requestIds: { request_id: string }[] = await Promise.all(
+      prompts.map((prompt) =>
+        falAiModel.generateImage(prompt.prompt, parsedBody.data.modelId!)
+      )
+    );
+
+
     const images = await prismaClient.outputImages.createManyAndReturn({
-        data: prompts.map((prompt) => ({
+        data: prompts.map((prompt, index) => ({
         prompt : prompt.prompt,
         userID : USERID,
         modelId : parsedBody.data.modelId,
-        imageUrl : ""
+        imageUrl : "",
+        falAiRequestId : requestIds[index].request_id,
       }))
     })
 
