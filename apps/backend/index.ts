@@ -8,6 +8,7 @@ import { prismaClient } from "db";
 import { S3Client } from "bun";
 import { FalAIModel } from "./models/FalAIModel";
 import dotenv from "dotenv"
+import cors from "cors"
 
 dotenv.config()
 
@@ -16,6 +17,7 @@ const PORT = process.env.PORT || 8080;
 const falAiModel = new FalAIModel();
 
 const app = express();
+app.use(cors())
 app.use(express.json())
 
 const USERID = "123"
@@ -28,11 +30,13 @@ console.log(process.env.BUCKET_NAME)
 app.get("/pre-signed-url", async(req, res) => {
   const key = `models/${Date.now()}_${Math.random()}.zip`;
   const url = S3Client.presign( key,{
+    method: "PUT",
     accessKeyId: process.env.S3_ACCESS_KEY,
     secretAccessKey : process.env.S3_SECRET_KEY,
     endpoint : process.env.ENDPOINT,
     bucket : process.env.BUCKET_NAME,
     expiresIn : 60 * 5,
+    type: "application/zip"
   })
 
   res.json({
