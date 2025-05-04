@@ -9,6 +9,7 @@ import { S3Client } from "bun";
 import { FalAIModel } from "./models/FalAIModel";
 import dotenv from "dotenv"
 import cors from "cors"
+import { authMiddleware } from "./middleware";
 
 dotenv.config()
 
@@ -19,8 +20,6 @@ const falAiModel = new FalAIModel();
 const app = express();
 app.use(cors())
 app.use(express.json())
-
-const USERID = "123"
 
 console.log(process.env.S3_ACCESS_KEY)
 console.log(process.env.S3_SECRET_KEY)
@@ -45,17 +44,18 @@ app.get("/pre-signed-url", async(req, res) => {
   })
 })
 
-app.post("/ai/training", async (req, res) => {
+app.post("/ai/training", authMiddleware,  async (req, res) => {
   const parsedBody = TrainModel.safeParse(req.body)
   const images = req.body.images
 
   if(!parsedBody.success){
+    console.log("Validation errors:", parsedBody.error.format());
     res.status(411).json({
-      message: "Input incorrect"
-    })
-    return
+      message: "Input incorrect",
+      errors: parsedBody.error.format()
+    });
+    return;
   }
-
   const { request_id, response_url } = await falAiModel.trainModel(parsedBody.data.zipUrl, parsedBody.data.name)
 
   const data = await prismaClient.model.create({
@@ -66,7 +66,7 @@ app.post("/ai/training", async (req, res) => {
       ethinicity: parsedBody.data.ethinicity,
       eyeColor : parsedBody.data.eyeColor,
       bald : parsedBody.data.bald,
-      userId : USERID,
+      userId : req.userId!,
       zipUrl : parsedBody.data.zipUrl,
       falAiRequestId : request_id,
     }
@@ -77,7 +77,7 @@ app.post("/ai/training", async (req, res) => {
   })
 })
 
-app.post("/ai/generate", async (req, res) => {
+app.post("/ai/generate",authMiddleware, async (req, res) => {
     const parsedBody = GenerateImage.safeParse(req.body)
 
     if (!parsedBody.success){
@@ -105,7 +105,7 @@ app.post("/ai/generate", async (req, res) => {
     const data = await prismaClient.outputImages.create({
       data : {
         prompt: parsedBody.data.prompt,
-        userID : USERID,
+        userID : req.userId!,
         modelId : parsedBody.data.modelId,
         imageUrl: "",
         falAiRequestId : request_id
@@ -116,7 +116,7 @@ app.post("/ai/generate", async (req, res) => {
     })
 })
 
-app.post("/pack/generate", async(req, res) => {
+app.post("/pack/generate", authMiddleware ,async(req, res) => {
     const parsedBody = GenerateImagesFromPack.safeParse(req.body)
 
     if(!parsedBody.success){
@@ -155,7 +155,7 @@ app.post("/pack/generate", async(req, res) => {
     const images = await prismaClient.outputImages.createManyAndReturn({
         data: prompts.map((prompt, index) => ({
         prompt : prompt.prompt,
-        userID : USERID,
+        userID : req.userId!,
         modelId : parsedBody.data.modelId,
         imageUrl : "",
         falAiRequestId : requestIds[index]?.request_id,
@@ -175,7 +175,7 @@ app.get("/pack/bulk", async(req, res) => {
    })
 })
 
-app.get("/image/bulk", async (req, res) => {
+app.get("/image/bulk", authMiddleware,  async (req, res) => {
     const ids = req.query.images as string[]
     const limit = req.query.limit as string ?? "10";
     const offset = req.query.offset as string ?? "0" ;
@@ -183,7 +183,7 @@ app.get("/image/bulk", async (req, res) => {
     const imagesData = await prismaClient.outputImages.findMany({
       where: {
         id: {in : ids},
-        userID : USERID
+        userID : req.userId!
       },
       skip : parseInt(offset),
       take : parseInt(limit)
