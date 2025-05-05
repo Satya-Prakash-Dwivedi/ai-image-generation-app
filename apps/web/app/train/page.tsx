@@ -25,7 +25,7 @@ import { BACKEND_URL } from "../config"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@clerk/nextjs"
 
-export default function Train() {
+export function Train() {
     const { getToken } = useAuth();
     const [zipUrl, setZipUrl] = useState("");
     const [type, setType] = useState("Man")
@@ -82,15 +82,17 @@ export default function Train() {
       }
 
    return (
-    <div className="flex flex-col items-center justify-center h-screen">
-        <Card className="w-[350px]">
+    <div className="flex flex-col items-center justify-center pt-4">
+        <Card className="w-[650px]">
           <CardHeader>
             <CardTitle>Create Model</CardTitle>
             <CardDescription>Deploy your new AI model in one-click.</CardDescription>
           </CardHeader>
           <CardContent>
               <div className="grid w-full items-center gap-4">
-                <div className="flex flex-col space-y-1.5">
+                <div className="grid w-full items-center gap-4">
+                <div className="flex gap-4">
+                <div className="flex flex-col space-y-1.5 flex-1">
                   <Label htmlFor="name">Name</Label>
                   <Input 
                     value={name}
@@ -99,7 +101,19 @@ export default function Train() {
                     placeholder="Name of the model" 
                   />
                 </div>
-                <div className="flex flex-col space-y-1.5">
+                <div className="flex flex-col space-y-1.5 flex-1">
+                  <Label htmlFor="age">Age</Label>
+                  <Input 
+                    id="age" 
+                    value={age}
+                    type="number"
+                    placeholder="Age of the model" 
+                    onChange={(e) => setAge(e.target.value)} 
+                  />
+                </div>
+                </div>
+                <div className="flex gap-4 ">
+                <div className="flex flex-col space-y-1.5 flex-1">
                   <Label htmlFor="Type">Type</Label>
                   <Select 
                     value={type}
@@ -115,17 +129,7 @@ export default function Train() {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="age">Age</Label>
-                  <Input 
-                    id="age" 
-                    value={age}
-                    type="number"
-                    placeholder="Age of the model" 
-                    onChange={(e) => setAge(e.target.value)} 
-                  />
-                </div>
-                <div className="flex flex-col space-y-1.5">
+                <div className="flex flex-col space-y-1.5 flex-1">
                   <Label htmlFor="ethinicity">Ethnicity</Label>
                   <Select
                     value={ethinicity}
@@ -145,7 +149,8 @@ export default function Train() {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="flex flex-col space-y-1.5">
+                </div>
+                <div className="flex flex-col space-y-1.5 ">
                   <Label htmlFor="eye">Eye Color</Label>
                   <Select
                     value={eyeColor}
@@ -168,6 +173,7 @@ export default function Train() {
                     checked={bald}
                     onCheckedChange={(checked) => setBald(checked)} 
                   />
+               </div>
                 </div>
                 <UploadModal onUploadDone={(url) => {
                   console.log("Received ZIP URL:", url);

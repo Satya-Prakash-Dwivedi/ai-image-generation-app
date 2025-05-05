@@ -36,6 +36,7 @@ model Model {
   trainingStatus ModelTrainigStatus @default(Pending)
   triggerWord    String?
   tensorPath     String?
+  thumbnail      String?
   createdAt      DateTime           @default(now())
   updatedAt      DateTime           @updatedAt
   OutputImages   OutputImages[]
